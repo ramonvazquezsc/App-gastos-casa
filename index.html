@@ -71,12 +71,16 @@ h1,h2,h3{font-family:var(--r);margin:0 0 12px}h3{font-size:15px;color:var(--mute
    <input id="em" type="email" placeholder="Email" autocomplete="username" required>
    <input id="pw" type="password" placeholder="Contraseña" autocomplete="current-password" minlength="6" required>
    <div class="note hidden" id="ln">✉️ Te enviaremos un correo para confirmar tu cuenta. Tendrás que abrirlo antes de poder entrar.</div>
-   <div class="le" id="le"></div><button class="btn primary" id="lb">Entrar</button>
+   <div class="le" id="le"></div><button class="btn primary" id="lb">Entrar</button><button type="button" class="lnk" id="lFg">¿Has olvidado tu contraseña?</button>
   </form>
  </div>
- <div id="lOk" class="ok hidden"><div class="em">✉️</div><h2>¡Revisa tu correo!</h2><p class="sub" id="lokt"></p>
-  <p class="sub">Abre el enlace del mensaje para activar tu cuenta (mira también en spam). Después vuelve aquí y entra.</p>
+ <div id="lOk" class="ok hidden"><div class="em">✉️</div><h2 id="lokh">¡Revisa tu correo!</h2><p class="sub" id="lokt"></p>
+  <p class="sub" id="lokp"></p>
   <button class="btn primary" id="lGo">Ya lo he confirmado, entrar</button><button class="lnk" id="lRe">Reenviar el correo</button></div>
+ <div id="lNew" class="hidden"><div class="ok"><div class="em">🔑</div><h2>Elige una nueva contraseña</h2></div>
+  <p class="sub" style="margin:0 0 12px;text-align:center">Escríbela dos veces para evitar errores.</p>
+  <input id="np1" type="password" placeholder="Nueva contraseña (mínimo 6)" autocomplete="new-password"><input id="np2" type="password" placeholder="Repite la contraseña" autocomplete="new-password">
+  <div class="le" id="ne"></div><button class="btn primary" id="nB">Guardar contraseña</button></div>
 </div>
 <div class="feat"><span>👥 Gastos compartidos</span><span>📊 Resumen claro</span><span>💶 Cuentas al día</span></div>
 </div></div>
@@ -124,7 +128,9 @@ import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2
 const SUPABASE_URL='https://smupetzjjgohsndtvdre.supabase.co';
 const SUPABASE_KEY='sb_publishable_YyoSh1ONzRXFsN5bxUA4dg_9gbsVbd5';
 // =====================================================================
+const REC=/type=recovery/.test(location.hash),RED=location.origin+location.pathname;
 const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
+let okMode='signup';
 const CATS=[['Supermercado','🛒','#6C5CE7'],['Wifi','📶','#0984E3'],['Luz','💡','#FDCB6E'],['Agua','💧','#00B894'],['Calefacción','🔥','#E17055'],['Limpieza','🧹','#A3CB38'],['Otros','✨','#A0A6B8']];
 const NC=CATS.map(c=>c[0]),IC=Object.fromEntries(CATS.map(c=>[c[0],c[1]])),CC=Object.fromEntries(CATS.map(c=>[c[0],c[2]]));
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -148,7 +154,7 @@ const segP=(el,act)=>el.innerHTML=PER.map(p=>`<button data-p="${esc(p)}" class="
 const modo=up=>{signup=up;$('#tIn').classList.toggle('on',!up);$('#tUp').classList.toggle('on',up);
  $('#lh').textContent=up?'Crea tu cuenta ✨':'Bienvenido de nuevo 👋';
  $('#ls').textContent=up?'Es gratis. Después podrás crear tu hogar o unirte al de alguien.':'Entra con tu correo y contraseña.';
- $('#lb').textContent=up?'Crear mi cuenta':'Entrar';$('#ln').classList.toggle('hidden',!up);$('#le').textContent='';
+ $('#lb').textContent=up?'Crear mi cuenta':'Entrar';$('#lFg').classList.toggle('hidden',up);$('#ln').classList.toggle('hidden',!up);$('#le').textContent='';
  $('#pw').placeholder=up?'Contraseña (mínimo 6 caracteres)':'Contraseña';$('#pw').autocomplete=up?'new-password':'current-password'};
 $('#tIn').onclick=()=>modo(false);$('#tUp').onclick=()=>modo(true);
 const errA=m=>/already registered|already been registered/i.test(m)?'Ese correo ya tiene cuenta. Pulsa «Entrar» para acceder.':/not confirmed/i.test(m)?'Aún no has confirmado tu correo. Abre el enlace que te enviamos.':/invalid login/i.test(m)?'Email o contraseña incorrectos.':/rate limit/i.test(m)?'Demasiados intentos. Espera un rato y vuelve a probar.':m;
@@ -158,10 +164,25 @@ $('#lf').onsubmit=async e=>{e.preventDefault();$('#le').textContent='';const b=$
  if(error){$('#le').textContent=errA(error.message);return}
  if(signup&&!data.session){
   if(data.user&&data.user.identities&&!data.user.identities.length){$('#le').textContent=errA('already registered');return}
-  $('#lokt').innerHTML=`Hemos enviado un enlace de confirmación a <b>${esc(c.email)}</b>.`;$('#lForm').classList.add('hidden');$('#lOk').classList.remove('hidden');return}
+  mostrarOk('signup',c.email);return}
  entrar()};
 $('#lGo').onclick=()=>{$('#lOk').classList.add('hidden');$('#lForm').classList.remove('hidden');modo(false)};
-$('#lRe').onclick=async()=>{const {error}=await sb.auth.resend({type:'signup',email:$('#em').value.trim()});toast(error?errA(error.message):'Correo reenviado ✉️',!!error)};
+function mostrarOk(m,email){okMode=m;
+ $('#lokt').innerHTML=(m=='reset'?'Te hemos enviado un enlace para cambiar tu contraseña a ':'Hemos enviado un enlace de confirmación a ')+`<b>${esc(email)}</b>.`;
+ $('#lokp').textContent=m=='reset'?'Ábrelo, elige tu nueva contraseña y podrás entrar. Mira también en spam.':'Abre el enlace del mensaje para activar tu cuenta (mira también en spam). Después vuelve aquí y entra.';
+ $('#lGo').textContent=m=='reset'?'Volver a entrar':'Ya lo he confirmado, entrar';
+ $('#lForm').classList.add('hidden');$('#lOk').classList.remove('hidden')}
+$('#lRe').onclick=async()=>{const em=$('#em').value.trim();
+ const {error}=okMode=='reset'?await sb.auth.resetPasswordForEmail(em,{redirectTo:RED}):await sb.auth.resend({type:'signup',email:em,options:{emailRedirectTo:RED}});
+ toast(error?errA(error.message):'Correo reenviado ✉️',!!error)};
+$('#lFg').onclick=async()=>{const em=$('#em').value.trim();
+ if(!em){$('#le').textContent='Escribe tu correo arriba y pulsa de nuevo.';return}
+ const {error}=await sb.auth.resetPasswordForEmail(em,{redirectTo:RED});
+ if(error){$('#le').textContent=errA(error.message);return}mostrarOk('reset',em)};
+$('#nB').onclick=async()=>{const x=$('#np1').value,y=$('#np2').value;$('#ne').textContent='';
+ if(x.length<6){$('#ne').textContent='Mínimo 6 caracteres.';return}if(x!==y){$('#ne').textContent='Las contraseñas no coinciden.';return}
+ const {error}=await sb.auth.updateUser({password:x});if(error){$('#ne').textContent=error.message;return}
+ history.replaceState(null,'',location.pathname);toast('Contraseña actualizada ✅');$('#lNew').classList.add('hidden');$('#lForm').classList.remove('hidden');entrar()};
 $('#out').onclick=$('#oO').onclick=async()=>{await sb.auth.signOut();location.reload()};
  
 const tema=()=>{$('#thm').textContent=document.documentElement.dataset.theme=='dark'?'☀️':'🌙'};
@@ -325,5 +346,7 @@ async function entrar(){
  if(!bound){bind();bound=true}
  $('#fec').value=hoy();chipsF();segP($('#sp'),S.persona);renderCats();await cargar()}
 const {data:{session}}=await sb.auth.getSession();
-session?entrar():$('#login').classList.remove('hidden');
+if(/otp_expired/.test(location.hash))$('#le').textContent='El enlace ha caducado. Pide uno nuevo.';
+if(REC&&session){$('#lForm').classList.add('hidden');$('#lNew').classList.remove('hidden');$('#login').classList.remove('hidden')}
+else session?entrar():$('#login').classList.remove('hidden');
 </script></body></html>
