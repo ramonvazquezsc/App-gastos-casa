@@ -31,7 +31,7 @@ h1,h2,h3{font-family:var(--r);margin:0 0 12px}h3{font-size:15px;color:var(--mute
 .chips{display:flex;gap:8px;margin-bottom:10px}.chip{border:1px solid var(--bd);background:var(--card);border-radius:99px;padding:8px 14px}.chip.on{background:var(--ps);border-color:var(--p);color:var(--p)}
 .item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid var(--bd);background:var(--card);padding:12px 14px;border-radius:16px;margin-bottom:8px}
 .dot{width:10px;height:10px;border-radius:50%;flex:none}.grow{flex:1;min-width:0;display:flex;flex-direction:column}.grow small{font-size:12px}
-.v,.tot,.item b+small+*{font-family:var(--r);font-weight:800}.tot{font-size:36px}
+.v,.tot{font-family:var(--r);font-weight:800}.tot{font-size:36px}
 .split{display:flex;height:12px;border-radius:99px;overflow:hidden;margin:14px 0 8px;background:var(--bg)}
 .leg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px}.leg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
 .res{border-radius:16px;padding:14px;text-align:center;background:var(--ps);margin-bottom:8px}.res .v{font-size:30px;color:var(--p)}.res.ok{background:rgba(18,183,106,.15)}.res.warn{background:rgba(253,203,110,.25)}
@@ -44,6 +44,7 @@ h1,h2,h3{font-family:var(--r);margin:0 0 12px}h3{font-size:15px;color:var(--mute
 .nav button{flex:1;border:0;background:none;padding:6px;border-radius:14px;color:var(--muted);font-size:12px;font-weight:600}.nav button.on{color:var(--p);background:var(--ps)}
 .sheet{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:rgba(10,12,30,.5)}
 .sb{width:100%;max-width:520px;background:var(--card);border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:92vh;overflow:auto}
+.mrow{display:flex;gap:8px;align-items:center;margin-bottom:8px}.mrow input{margin:0}.ib2{border:0;background:var(--bg);border-radius:12px;width:46px;height:46px;flex:none;font-size:18px}
 .toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#1E2233;color:#fff;padding:12px 18px;border-radius:14px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:90%;text-align:center}
 .toast.show{opacity:1}.toast.er{background:var(--red)}
 #login{max-width:none;min-height:100vh;padding:24px 16px;display:grid;place-items:center;background:linear-gradient(160deg,#6C5CE7 0%,#9B8CFF 55%,#C9BFFF 100%);position:relative;overflow:hidden}
@@ -74,7 +75,7 @@ h1,h2,h3{font-family:var(--r);margin:0 0 12px}h3{font-size:15px;color:var(--mute
    <div class="le" id="le"></div><button class="btn primary" id="lb">Entrar</button><button type="button" class="lnk" id="lFg">¿Has olvidado tu contraseña?</button>
   </form>
  </div>
- <div id="lOk" class="ok hidden"><div class="em">✉️</div><h2 id="lokh">¡Revisa tu correo!</h2><p class="sub" id="lokt"></p>
+ <div id="lOk" class="ok hidden"><div class="em">✉️</div><h2>¡Revisa tu correo!</h2><p class="sub" id="lokt"></p>
   <p class="sub" id="lokp"></p>
   <button class="btn primary" id="lGo">Ya lo he confirmado, entrar</button><button class="lnk" id="lRe">Reenviar el correo</button></div>
  <div id="lNew" class="hidden"><div class="ok"><div class="em">🔑</div><h2>Elige una nueva contraseña</h2></div>
@@ -85,15 +86,14 @@ h1,h2,h3{font-family:var(--r);margin:0 0 12px}h3{font-size:15px;color:var(--mute
 <div class="feat"><span>👥 Gastos compartidos</span><span>📊 Resumen claro</span><span>💶 Cuentas al día</span></div>
 </div></div>
  
-<div id="onb" class="hidden"><div class="card"><h2>¡Bienvenido!</h2><p class="sub">Elige cómo quieres llamarte y crea tu hogar o únete a uno existente.</p>
-<input id="oN" placeholder="Tu nombre (ej. Ana)" maxlength="30">
-<h3>Crear un hogar nuevo</h3><input id="oH" placeholder="Nombre del hogar (ej. Piso Centro)" maxlength="60">
+<div id="onb" class="hidden"><div class="card"><h2>¡Bienvenido!</h2><p class="sub">Crea tu hogar y apunta a las personas que viven en él (tú incluido). Podrás añadir, quitar o renombrar después.</p>
+<input id="oH" placeholder="Nombre del hogar (ej. Piso Centro)" maxlength="60">
+<h3>¿Quiénes sois?</h3><div id="oL"></div><button class="lnk" id="oA">+ Añadir otra persona</button>
 <button class="btn primary" id="oC">Crear hogar</button></div>
-<div class="card"><h3>O unirme con un código</h3><input id="oK" placeholder="Código de invitación"><button class="btn primary" id="oU">Unirme</button></div>
 <button class="lnk" id="oO">Cerrar sesión</button></div>
  
 <div id="app" class="hidden">
-<header class="hero"><div class="ht"><span id="th"></span><span><button class="ib" id="thm" title="Cambiar tema">🌙</button><button class="ib" id="inv" title="Invitar">👥</button><button class="ib" id="out" title="Salir">⏻</button></span></div>
+<header class="hero"><div class="ht"><span id="th"></span><span><button class="ib" id="thm" title="Cambiar tema">🌙</button><button class="ib" id="mg" title="Hogar e integrantes">👥</button><button class="ib" id="out" title="Salir">⏻</button></span></div>
 <div class="big" id="tot">0,00 €</div><small>gastado en <span id="mn"></span></small><div id="hcmp" style="font-size:13px;font-weight:700;margin-top:6px"></div><div style="position:relative;height:160px;margin-top:8px"><canvas id="hch"></canvas></div><div id="hleg" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12px;margin-top:6px"></div></header>
  
 <div class="card hidden" id="bn" style="background:rgba(253,203,110,.25);font-size:14px"></div>
@@ -119,19 +119,26 @@ h1,h2,h3{font-family:var(--r);margin:0 0 12px}h3{font-size:15px;color:var(--mute
 <input id="sI" inputmode="decimal"><div class="seg" id="sS"></div><select id="sC"></select>
 <input id="sD" class="hidden" placeholder="¿Qué gasto es?"><input type="date" id="sF">
 <button class="btn primary" id="sG">Guardar cambios</button><button class="btn red" id="sB">Borrar gasto</button><button class="btn" id="sX">Cancelar</button></div></div>
+ 
+<div class="sheet hidden" id="mgs"><div class="sb"><h2>Tu hogar</h2><small>Nombre del hogar</small><input id="mgH" maxlength="60" style="margin-top:6px">
+<h3>Integrantes</h3><div id="mgl"></div>
+<div class="mrow"><input id="mgN" placeholder="Añadir persona" maxlength="30"><button class="ib2" id="mgA" title="Añadir">➕</button></div>
+<div class="sub">Si quitas a alguien, sus gastos siguen en el historial. Las cuentas de meses pasados se recalculan con los integrantes actuales, así que liquida el mes antes de hacer cambios.</div>
+<button class="btn" id="mgX">Cerrar</button></div></div>
 <div class="toast" id="toast"></div>
  
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <script type="module">
 import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-// ====== PEGA AQUÍ TUS DATOS (Supabase > Project Settings > API) ======
-const SUPABASE_URL='https://smupetzjjgohsndtvdre.supabase.co';
-const SUPABASE_KEY='sb_publishable_YyoSh1ONzRXFsN5bxUA4dg_9gbsVbd5';
-// =====================================================================
+// ====== PEGA AQUÍ LOS DATOS DE TU PROYECTO NUEVO (Supabase > Project Settings > API) ======
+const SUPABASE_URL='PEGA_AQUI_LA_URL_DEL_PROYECTO';
+const SUPABASE_KEY='PEGA_AQUI_LA_PUBLISHABLE_KEY';
+// ==========================================================================================
 const REC=/type=recovery/.test(location.hash),RED=location.origin+location.pathname;
 const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
 let okMode='signup';
 const CATS=[['Supermercado','🛒','#6C5CE7'],['Wifi','📶','#0984E3'],['Luz','💡','#FDCB6E'],['Agua','💧','#00B894'],['Calefacción','🔥','#E17055'],['Limpieza','🧹','#A3CB38'],['Otros','✨','#A0A6B8']];
+const COLS=['#6C5CE7','#E17055','#0984E3','#E84393','#FDCB6E','#A29BFE','#55EFC4','#D63031'];
 const NC=CATS.map(c=>c[0]),IC=Object.fromEntries(CATS.map(c=>[c[0],c[1]])),CC=Object.fromEntries(CATS.map(c=>[c[0],c[2]]));
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const pad=n=>String(n).padStart(2,'0'),iso=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
@@ -143,24 +150,24 @@ const sum=a=>a.reduce((s,g)=>s+g.importe,0);
 const num=v=>{const n=parseFloat(String(v).replace(/\s/g,'').replace(',','.'));return isFinite(n)?r2(n):NaN};
 const fc=s=>new Date(s+'T00:00:00').toLocaleDateString('es-ES',{day:'numeric',month:'short'});
 const mesN=k=>cap(new Date(k+'-01T00:00:00').toLocaleDateString('es-ES',{month:'long',year:'numeric'}).replace(' de ',' '));
-const S={g:[],mi:[],hogar:null,yo:null,tab:'add',cat:null,persona:null,per:'mes',q:'',ct:'',dm:null,liq:{},edit:null};
+const S={g:[],mi:[],all:[],hogar:null,tab:'add',cat:null,persona:null,per:'mes',q:'',ct:'',dm:null,liq:{},edit:null};
 let PER=[],COL={},chart,bound=false,signup=false,tt;
 const toast=(m,e)=>{const t=$('#toast');t.textContent=m;t.classList.toggle('er',!!e);t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2800)};
-const nombreDe=u=>S.mi.find(m=>m.user_id===u)?.nombre||'Compartido';
-const uid=n=>S.mi.find(m=>m.nombre===n)?.user_id??null;
+const nombreDe=u=>S.all.find(m=>m.id===u)?.nombre||'Compartido';
+const uid=n=>S.all.find(m=>m.nombre===n)?.id??null;
 const segP=(el,act)=>el.innerHTML=PER.map(p=>`<button data-p="${esc(p)}" class="${p===act?'on':''}" style="--c:${COL[p]}">${esc(p)}</button>`).join('');
  
 /* ---------- Login / registro ---------- */
 const modo=up=>{signup=up;$('#tIn').classList.toggle('on',!up);$('#tUp').classList.toggle('on',up);
  $('#lh').textContent=up?'Crea tu cuenta ✨':'Bienvenido de nuevo 👋';
- $('#ls').textContent=up?'Es gratis. Después podrás crear tu hogar o unirte al de alguien.':'Entra con tu correo y contraseña.';
+ $('#ls').textContent=up?'Es gratis. Después crearás tu hogar y apuntarás a quienes viven en él.':'Entra con tu correo y contraseña.';
  $('#lb').textContent=up?'Crear mi cuenta':'Entrar';$('#lFg').classList.toggle('hidden',up);$('#ln').classList.toggle('hidden',!up);$('#le').textContent='';
  $('#pw').placeholder=up?'Contraseña (mínimo 6 caracteres)':'Contraseña';$('#pw').autocomplete=up?'new-password':'current-password'};
 $('#tIn').onclick=()=>modo(false);$('#tUp').onclick=()=>modo(true);
 const errA=m=>/already registered|already been registered/i.test(m)?'Ese correo ya tiene cuenta. Pulsa «Entrar» para acceder.':/not confirmed/i.test(m)?'Aún no has confirmado tu correo. Abre el enlace que te enviamos.':/invalid login/i.test(m)?'Email o contraseña incorrectos.':/rate limit/i.test(m)?'Demasiados intentos. Espera un rato y vuelve a probar.':m;
 $('#lf').onsubmit=async e=>{e.preventDefault();$('#le').textContent='';const b=$('#lb');b.disabled=true;
  const c={email:$('#em').value.trim(),password:$('#pw').value};
- const {data,error}=signup?await sb.auth.signUp({...c,options:{emailRedirectTo:location.origin+location.pathname}}):await sb.auth.signInWithPassword(c);b.disabled=false;
+ const {data,error}=signup?await sb.auth.signUp({...c,options:{emailRedirectTo:RED}}):await sb.auth.signInWithPassword(c);b.disabled=false;
  if(error){$('#le').textContent=errA(error.message);return}
  if(signup&&!data.session){
   if(data.user&&data.user.identities&&!data.user.identities.length){$('#le').textContent=errA('already registered');return}
@@ -187,24 +194,56 @@ $('#out').onclick=$('#oO').onclick=async()=>{await sb.auth.signOut();location.re
  
 const tema=()=>{$('#thm').textContent=document.documentElement.dataset.theme=='dark'?'☀️':'🌙'};
 $('#thm').onclick=()=>{const n=document.documentElement.dataset.theme=='dark'?'light':'dark';document.documentElement.dataset.theme=n;try{localStorage.setItem('tema',n)}catch{}tema();if(S.tab=='sum')renderRes()};tema();
-/* ---------- Hogar ---------- */
-const errH=e=>/duplicate|unique/i.test(e.message)?'Ese nombre ya está en uso en el hogar.':e.message;
-$('#oC').onclick=async()=>{const n=$('#oN').value.trim(),h=$('#oH').value.trim();if(!n||!h)return toast('Escribe tu nombre y el del hogar',1);
- const {error}=await sb.rpc('crear_hogar',{p_hogar:h,p_nombre:n});error?toast(errH(error),1):entrar()};
-$('#oU').onclick=async()=>{const n=$('#oN').value.trim(),k=$('#oK').value.trim();if(!n||!k)return toast('Escribe tu nombre y el código',1);
- const {error}=await sb.rpc('unirse_hogar',{p_codigo:k,p_nombre:n});error?toast(errH(error),1):entrar()};
-$('#inv').onclick=async()=>{const k=S.hogar.codigo;try{await navigator.clipboard.writeText(k)}catch{}
- toast(`Código: ${k} (copiado). Pásalo a quien quieras añadir · ${S.mi.length} miembro${S.mi.length==1?'':'s'}`)};
+ 
+/* ---------- Hogar: alta ---------- */
+const errH=e=>/duplicate|unique/i.test(e.message)?'Ese nombre ya existe en el hogar.':e.message;
+const oRow=()=>{const i=document.createElement('input');i.placeholder='Nombre';i.maxLength=30;$('#oL').appendChild(i)};
+$('#oA').onclick=oRow;
+$('#oC').onclick=async()=>{const h=$('#oH').value.trim(),ns=$$('#oL input').map(i=>cap(i.value.trim())).filter(Boolean),l=ns.map(n=>n.toLowerCase());
+ if(!h||!ns.length)return toast('Pon el nombre del hogar y al menos una persona',1);
+ if(new Set(l).size<l.length||l.includes('compartido'))return toast('Los nombres deben ser distintos (y no «Compartido»)',1);
+ const b=$('#oC');b.disabled=true;
+ const {data,error}=await sb.from('hogares').insert({nombre:h}).select().single();
+ if(error){b.disabled=false;return toast(error.message,1)}
+ const {error:e2}=await sb.from('miembros').insert(ns.map((n,i)=>({hogar_id:data.id,nombre:n,color:COLS[i%COLS.length],orden:i})));
+ b.disabled=false;e2?toast(e2.message,1):entrar()};
+ 
+/* ---------- Hogar: carga e integrantes ---------- */
+function setPer(){PER=[...S.mi.map(m=>m.nombre),'Compartido'];
+ COL=Object.fromEntries([...S.all.map(m=>[m.nombre,m.color]),['Compartido','#00B894']]);
+ if(!PER.includes(S.persona))S.persona=PER[0]}
 async function cargarHogar(){
- const {data:{user}}=await sb.auth.getUser();
- const {data:ms,error}=await sb.from('miembros').select('*,hogares(nombre,codigo)');
+ const {data:h,error:e1}=await sb.from('hogares').select('*').maybeSingle();
+ if(e1){toast(e1.message,1);return false}if(!h)return false;
+ const {data:ms,error}=await sb.from('miembros').select('*').order('orden').order('creado_en');
  if(error){toast(error.message,1);return false}
- const yo=ms.find(m=>m.user_id===user.id);if(!yo)return false;
- S.yo=yo;S.hogar={id:yo.hogar_id,...yo.hogares};S.mi=ms.filter(m=>m.hogar_id===yo.hogar_id);
- PER=[...S.mi.map(m=>m.nombre),'Compartido'];
- COL=Object.fromEntries([...S.mi.map(m=>[m.nombre,m.color]),['Compartido','#00B894']]);
- if(!PER.includes(S.persona))S.persona=yo.nombre;
- document.title=S.hogar.nombre;$('#th').textContent=S.hogar.nombre;return true}
+ S.hogar=h;S.all=ms;S.mi=ms.filter(m=>m.activo);setPer();
+ document.title=h.nombre;$('#th').textContent=h.nombre;return true}
+async function refrescar(){await cargarHogar();renderMg();segP($('#sp'),S.persona);await cargar()}
+function renderMg(){$('#mgl').innerHTML=S.mi.map(m=>`<div class="mrow"><i class="dot" style="background:${m.color}"></i><input data-id="${m.id}" value="${esc(m.nombre)}" maxlength="30"><button class="ib2" data-d="${m.id}" title="Quitar">🗑</button></div>`).join('')}
+$('#mg').onclick=()=>{$('#mgH').value=S.hogar.nombre;renderMg();$('#mgs').classList.remove('hidden')};
+const cierraMg=()=>$('#mgs').classList.add('hidden');
+$('#mgX').onclick=cierraMg;$('#mgs').onclick=e=>{if(e.target.id=='mgs')cierraMg()};
+$('#mgH').onchange=async e=>{const n=e.target.value.trim();if(!n){e.target.value=S.hogar.nombre;return}
+ const {error}=await sb.from('hogares').update({nombre:n}).eq('id',S.hogar.id);if(error)return toast(error.message,1);
+ toast('Nombre del hogar cambiado ✅');await refrescar()};
+$('#mgl').onchange=async e=>{const i=e.target,n=cap(i.value.trim()),m=S.all.find(x=>x.id==i.dataset.id);if(!m)return;
+ if(!n||n==m.nombre){i.value=m.nombre;return}
+ if(n.toLowerCase()=='compartido'||S.all.some(x=>x.id!=m.id&&x.nombre.toLowerCase()==n.toLowerCase())){i.value=m.nombre;return toast('Ese nombre ya existe',1)}
+ const {error}=await sb.from('miembros').update({nombre:n}).eq('id',m.id);
+ if(error){i.value=m.nombre;return toast(errH(error),1)}toast('Nombre cambiado ✅');await refrescar()};
+$('#mgl').onclick=async e=>{const b=e.target.closest('[data-d]');if(!b)return;const m=S.all.find(x=>x.id==b.dataset.d);if(!m)return;
+ if(S.mi.length<2)return toast('Tiene que quedar al menos una persona',1);
+ const usado=S.g.some(g=>g.pagador==m.id);
+ if(!confirm(usado?`¿Quitar a ${m.nombre}? Sus gastos se mantienen en el historial.`:`¿Quitar a ${m.nombre}?`))return;
+ const {error}=usado?await sb.from('miembros').update({activo:false}).eq('id',m.id):await sb.from('miembros').delete().eq('id',m.id);
+ if(error)return toast(errH(error),1);toast('Integrante quitado');await refrescar()};
+$('#mgA').onclick=async()=>{const n=cap($('#mgN').value.trim());if(!n)return;
+ const old=S.all.find(x=>x.nombre.toLowerCase()==n.toLowerCase());
+ if((old&&old.activo)||n.toLowerCase()=='compartido')return toast('Ese nombre ya existe',1);
+ const {error}=old?await sb.from('miembros').update({activo:true}).eq('id',old.id)
+  :await sb.from('miembros').insert({hogar_id:S.hogar.id,nombre:n,color:COLS[S.all.length%COLS.length],orden:S.all.length});
+ if(error)return toast(errH(error),1);$('#mgN').value='';toast(`${n} añadido ✅`);await refrescar()};
  
 /* ---------- Datos ---------- */
 async function cargar(){
@@ -240,6 +279,7 @@ function inactividad(){const m=[...S.g.map(g=>g.creado_en),...Object.values(S.li
  const d=m.length?Math.floor((Date.now()-Math.max(...m))/864e5):0;
  if(d>=7){b.innerHTML=`⏰ Hace <b>${d} días</b> que no se anota ningún gasto. ¿Se os ha olvidado alguno? <button class="lnk" id="bx" style="width:auto;padding:0 8px;float:right">×</button>`;b.classList.remove('hidden')}else b.classList.add('hidden')}
 document.addEventListener('click',e=>{if(e.target.id=='bx'){bx=true;$('#bn').classList.add('hidden')}});
+ 
 /* ---------- Añadir ---------- */
 const renderCats=()=>{$('#cats').innerHTML=CATS.map(c=>`<button class="cat ${S.cat==c[0]?'on':''}" data-c="${c[0]}"><span>${c[1]}</span>${c[0]}</button>`).join('');$('#det').classList.toggle('hidden',S.cat!=='Otros')};
 const chipsF=()=>$$('.chip[data-f]').forEach(c=>c.classList.toggle('on',$('#fec').value==(c.dataset.f=='0'?hoy():ayer())));
@@ -253,10 +293,10 @@ async function guardar(){
  toast(`✅ ${eur(importe)} guardados en «${S.cat}»`);$('#imp').value='';$('#det').value='';S.cat=null;renderCats();await cargar()}
  
 /* ---------- Cuentas (N personas) ---------- */
-function saldo(k){const m=S.g.filter(g=>g.fecha.slice(0,7)==k),n=S.mi.length,pag={};
- S.mi.forEach(x=>pag[x.nombre]=sum(m.filter(g=>g.persona==x.nombre)));
+function saldo(k){const m=S.g.filter(g=>g.fecha.slice(0,7)==k),P=S.all.filter(x=>x.activo||m.some(g=>g.persona==x.nombre)),n=P.length||1,pag={};
+ P.forEach(x=>pag[x.nombre]=sum(m.filter(g=>g.persona==x.nombre)));
  const total=r2(Object.values(pag).reduce((a,b)=>a+b,0)),de=[],ac=[];
- S.mi.forEach(x=>{const s=r2(pag[x.nombre]-total/n);if(s<-.005)de.push({n:x.nombre,v:-s});else if(s>.005)ac.push({n:x.nombre,v:s})});
+ P.forEach(x=>{const s=r2(pag[x.nombre]-total/n);if(s<-.005)de.push({n:x.nombre,v:-s});else if(s>.005)ac.push({n:x.nombre,v:s})});
  de.sort((a,b)=>b.v-a.v);ac.sort((a,b)=>b.v-a.v);const pagos=[];let i=0,j=0;
  while(i<de.length&&j<ac.length){const x=r2(Math.min(de[i].v,ac[j].v));pagos.push({de:de[i].n,a:ac[j].n,v:x});
   de[i].v=r2(de[i].v-x);ac[j].v=r2(ac[j].v-x);if(de[i].v<=.005)i++;if(ac[j].v<=.005)j++}
@@ -286,20 +326,21 @@ $('#deuda').onclick=async e=>{const b=e.target.closest('button');if(!b||!b.datas
 /* ---------- Resumen ---------- */
 function renderRes(){renderDeuda();
  const o=(l,a)=>l.map(([v,t])=>`<option value="${esc(v)}" ${v==a?'selected':''}>${esc(t)}</option>`).join('');
+ const PQ=[...new Set([...PER,...S.g.map(g=>g.persona)])];
  $('#fP').innerHTML=o([['mes','Este mes'],['mp','Mes pasado'],['anio','Este año'],['todo','Todo']],S.per);
- $('#fQ').innerHTML=o([['','Todos'],...PER.map(p=>[p,p])],S.q);
+ $('#fQ').innerHTML=o([['','Todos'],...PQ.map(p=>[p,p])],S.q);
  $('#fC').innerHTML=o([['','Todos'],...NC.map(c=>[c,IC[c]+' '+c])],S.ct);
  const [a,b]=rango(),f=S.g.filter(g=>g.fecha>=a&&g.fecha<=b&&(!S.q||g.persona==S.q)&&(!S.ct||g.tipo==S.ct));
  $('#se').classList.toggle('hidden',!!f.length);$('#sb2').classList.toggle('hidden',!f.length);if(!f.length)return;
  const tot=sum(f),pp=p=>sum(f.filter(g=>g.persona==p));
  $('#kpi').innerHTML=`<small>Total</small><div class="tot">${eur(tot)}</div><small>${f.length} gasto${f.length==1?'':'s'}</small>
- <div class="split">${PER.map(p=>`<span style="width:${pp(p)/tot*100}%;background:${COL[p]}"></span>`).join('')}</div>
- <div class="leg">${PER.map(p=>`<span><i style="background:${COL[p]}"></i>${esc(p)} ${eur(pp(p))}</span>`).join('')}</div>`;
+ <div class="split">${PQ.map(p=>`<span style="width:${pp(p)/tot*100}%;background:${COL[p]}"></span>`).join('')}</div>
+ <div class="leg">${PQ.map(p=>`<span><i style="background:${COL[p]}"></i>${esc(p)} ${eur(pp(p))}</span>`).join('')}</div>`;
  const fe=f.map(g=>g.fecha).sort(),mes=(new Date(fe.at(-1))-new Date(fe[0]))/864e5>62,key=g=>mes?g.fecha.slice(0,7):g.fecha,keys=[...new Set(f.map(key))].sort();
  Chart.defaults.color=getComputedStyle(document.body).getPropertyValue('--muted').trim()||'#888';
  chart?.destroy();
  chart=new Chart($('#ch'),{type:'bar',data:{labels:keys.map(k=>mes?mesN(k).slice(0,3)+' '+k.slice(2,4):fc(k)),
-  datasets:PER.map(p=>({label:p,backgroundColor:COL[p],borderRadius:5,data:keys.map(k=>r2(sum(f.filter(g=>g.persona==p&&key(g)==k))))}))},
+  datasets:PQ.map(p=>({label:p,backgroundColor:COL[p],borderRadius:5,data:keys.map(k=>r2(sum(f.filter(g=>g.persona==p&&key(g)==k))))}))},
   options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,ticks:{callback:v=>v+' €'}}},plugins:{legend:{position:'bottom'}}}});
  const m=new Map();f.forEach(g=>m.set(g.tipo,(m.get(g.tipo)||0)+g.importe));
  $('#rk').innerHTML=[...m].sort((x,y)=>y[1]-x[1]).map(([t,v])=>`<div class="rk"><div class="rt"><span>${IC[t]} ${t}</span><b>${eur(v)}</b></div><div class="bar"><span style="width:${v/tot*100}%;background:${CC[t]}"></span></div></div>`).join('')}
@@ -341,7 +382,7 @@ function bind(){$$('.nav button').forEach(b=>b.onclick=()=>tab(b.dataset.t));
  $('#sC').innerHTML=NC.map(c=>`<option value="${c}">${IC[c]} ${c}</option>`).join('')}
 async function entrar(){
  $('#login').classList.add('hidden');
- if(!await cargarHogar()){$('#onb').classList.remove('hidden');return}
+ if(!await cargarHogar()){if(!$('#oL').children.length){oRow();oRow()}$('#onb').classList.remove('hidden');return}
  $('#onb').classList.add('hidden');$('#app').classList.remove('hidden');$('#nav').classList.remove('hidden');
  if(!bound){bind();bound=true}
  $('#fec').value=hoy();chipsF();segP($('#sp'),S.persona);renderCats();await cargar()}
@@ -350,3 +391,5 @@ if(/otp_expired/.test(location.hash))$('#le').textContent='El enlace ha caducado
 if(REC&&session){$('#lForm').classList.add('hidden');$('#lNew').classList.remove('hidden');$('#login').classList.remove('hidden')}
 else session?entrar():$('#login').classList.remove('hidden');
 </script></body></html>
+
+ 
