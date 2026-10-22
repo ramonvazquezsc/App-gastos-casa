@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#6C5CE7"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0B0C2A"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hogga"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
-<title>Gastos de casa</title>
+<title>Hogga</title>
 <script>try{var t=localStorage.getItem("tema");if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme="light"}</script>
 <style>
-:root{--bg:#F4F5FB;--card:#fff;--text:#1E2233;--muted:#7A8094;--bd:#E8EAF3;--p:#6C5CE7;--ps:#EFECFF;--red:#E5484D;--r:"Nunito",ui-rounded,system-ui,sans-serif}
-:root{color-scheme:light}:root[data-theme=dark]{color-scheme:dark;--bg:#0F111A;--card:#181B27;--text:#ECEEF6;--muted:#9097AD;--bd:#262A3B;--ps:#2A2550}
+:root{--bg:#F4F5FB;--card:#fff;--text:#1E2233;--muted:#7A8094;--bd:#E8EAF3;--p:#7B5CFA;--ps:#EFEBFF;--red:#E5484D;--r:"Nunito",ui-rounded,system-ui,sans-serif}
+:root{color-scheme:light}:root[data-theme=dark]{color-scheme:dark;--bg:#0A0B1E;--card:#12142E;--text:#ECEEF8;--muted:#9296B5;--bd:#232649;--ps:#241F52}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 button{font:inherit;color:inherit;cursor:pointer}.hidden{display:none!important}
 #app,#login,#onb{max-width:520px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 14px) 16px calc(90px + env(safe-area-inset-bottom,0px))}
@@ -18,7 +18,7 @@ h1,h2,h3{font-family:var(--r);margin:0 0 12px}h3{font-size:15px;color:var(--mute
 .btn{width:100%;border:0;border-radius:16px;padding:14px;font-weight:700;font-size:16px;margin-top:6px;background:var(--bg)}
 .btn.primary{background:var(--p);color:#fff}.btn.red{background:none;color:var(--red)}.lnk{background:none;border:0;width:100%;color:var(--p);padding:10px;font-weight:600}
 .le{color:var(--red);font-size:14px;min-height:18px;margin-bottom:6px}
-.hero{background:linear-gradient(135deg,#6C5CE7,#9B8CFF);color:#fff;border-radius:24px;padding:18px 20px;margin-bottom:16px}
+.hero{background:linear-gradient(135deg,#3D63F5 0%,#8B5CF6 52%,#FF6B8A 100%);color:#fff;border-radius:24px;padding:18px 20px;margin-bottom:16px}
 .ht{display:flex;justify-content:space-between;align-items:center;font-family:var(--r);font-size:20px;font-weight:800}
 .ib{background:rgba(255,255,255,.2);border:0;border-radius:12px;width:40px;height:40px;margin-left:6px;color:#fff;font-size:18px}
 .big{font-family:var(--r);font-size:34px;font-weight:800;margin-top:8px}.hero small{color:#fff;opacity:.85}
@@ -47,23 +47,23 @@ h1,h2,h3{font-family:var(--r);margin:0 0 12px}h3{font-size:15px;color:var(--mute
 .mrow{display:flex;gap:8px;align-items:center;margin-bottom:8px}.mrow input{margin:0}.ib2{border:0;background:var(--bg);border-radius:12px;width:46px;height:46px;flex:none;font-size:18px}
 .toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#1E2233;color:#fff;padding:12px 18px;border-radius:14px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:90%;text-align:center}
 .toast.show{opacity:1}.toast.er{background:var(--red)}
-#login{max-width:none;min-height:100vh;padding:24px 16px;display:grid;place-items:center;background:linear-gradient(160deg,#6C5CE7 0%,#9B8CFF 55%,#C9BFFF 100%);position:relative;overflow:hidden}
-#login::before,#login::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.14)}
-#login::before{width:320px;height:320px;top:-110px;right:-90px}#login::after{width:240px;height:240px;bottom:-80px;left:-70px}
+#login{max-width:none;min-height:100vh;padding:24px 16px;display:grid;place-items:center;background:#0A0B26;position:relative;overflow:hidden}
+#login::before,#login::after{content:"";position:absolute;border-radius:50%;filter:blur(50px);opacity:.55}
+#login::before{width:340px;height:340px;top:-120px;right:-110px;background:#FF6B8A}#login::after{width:300px;height:300px;bottom:-110px;left:-100px;background:#3D63F5}
 #login .wrap{position:relative;z-index:1;width:100%;max-width:400px;text-align:center}
-#login .logo{width:84px;height:84px;border-radius:26px;margin:0 auto 14px;display:grid;place-items:center;background:linear-gradient(135deg,#6C5CE7,#9B8CFF);color:#fff;font-size:46px;font-weight:800;font-family:var(--r);box-shadow:0 0 0 4px rgba(255,255,255,.6),0 14px 34px rgba(40,20,120,.35)}
+#login .logo{display:block;width:96px;height:96px;border-radius:28px;margin:0 auto 16px;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 16px 40px rgba(123,92,250,.45)}
 #login h1{color:#fff;font-size:32px;margin:0 0 4px}#login .tag{color:rgba(255,255,255,.92);margin:0 0 20px;font-weight:600}
 .lc{background:var(--card);border-radius:26px;padding:20px;text-align:left;box-shadow:0 20px 50px rgba(30,20,100,.3)}
 .lc h2{margin:0 0 4px;font-size:21px}.lc .le{text-align:left}
 .tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--bg);padding:4px;border-radius:14px;margin-bottom:16px}
-.tabs button{border:0;background:none;padding:11px;border-radius:11px;font-weight:700;color:var(--muted)}.tabs button.on{background:var(--p);color:#fff;box-shadow:0 6px 16px rgba(108,92,231,.35)}
+.tabs button{border:0;background:none;padding:11px;border-radius:11px;font-weight:700;color:var(--muted)}.tabs button.on{background:var(--p);color:#fff;box-shadow:0 6px 16px rgba(123,92,250,.35)}
 .note{background:var(--ps);color:var(--p);border-radius:12px;padding:10px 12px;font-size:13px;font-weight:600;margin-bottom:12px}
 .ok{text-align:center}.ok .em{font-size:56px;margin-bottom:4px}.ok .sub{margin:0 0 10px}
 .feat{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:18px}.feat span{background:rgba(255,255,255,.2);color:#fff;padding:7px 12px;border-radius:99px;font-size:13px;font-weight:600}
 </style></head><body>
  
 <div id="login" class="hidden"><div class="wrap">
-<div class="logo">€</div><h1>Gastos de casa</h1><p class="tag">Las cuentas claras, entre todos</p>
+<img class="logo" src="icon-192.png" alt="Hogga"><h1>Hogga</h1><p class="tag">Gastos de hogar, sin complicaciones</p>
 <div class="lc">
  <div id="lForm">
   <div class="tabs"><button type="button" id="tIn" class="on">Entrar</button><button type="button" id="tUp">Crear cuenta</button></div>
@@ -83,7 +83,7 @@ h1,h2,h3{font-family:var(--r);margin:0 0 12px}h3{font-size:15px;color:var(--mute
   <input id="np1" type="password" placeholder="Nueva contraseña (mínimo 6)" autocomplete="new-password"><input id="np2" type="password" placeholder="Repite la contraseña" autocomplete="new-password">
   <div class="le" id="ne"></div><button class="btn primary" id="nB">Guardar contraseña</button></div>
 </div>
-<div class="feat"><span>👥 Gastos compartidos</span><span>📊 Resumen claro</span><span>💶 Cuentas al día</span></div>
+<div class="feat"><span>👥 Un hogar, varias personas</span><span>📊 Resumen claro</span><span>💶 Cuentas al día</span></div>
 </div></div>
  
 <div id="onb" class="hidden"><div class="card"><h2>¡Bienvenido!</h2><p class="sub">Crea tu hogar y apunta a las personas que viven en él (tú incluido). Podrás añadir, quitar o renombrar después.</p>
@@ -93,7 +93,7 @@ h1,h2,h3{font-family:var(--r);margin:0 0 12px}h3{font-size:15px;color:var(--mute
 <button class="lnk" id="oO">Cerrar sesión</button></div>
  
 <div id="app" class="hidden">
-<header class="hero"><div class="ht"><span id="th"></span><span><button class="ib" id="thm" title="Cambiar tema">🌙</button><button class="ib" id="mg" title="Hogar e integrantes">👥</button><button class="ib" id="out" title="Salir">⏻</button></span></div>
+<header class="hero"><div class="ht"><span style="display:flex;align-items:center;gap:10px;min-width:0"><img src="icon-192.png" alt="" width="32" height="32" style="border-radius:9px;flex:none"><span id="th" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span></span><span style="flex:none"><button class="ib" id="thm" title="Cambiar tema">🌙</button><button class="ib" id="mg" title="Hogar e integrantes">👥</button><button class="ib" id="out" title="Salir">⏻</button></span></div>
 <div class="big" id="tot">0,00 €</div><small>gastado en <span id="mn"></span></small><div id="hcmp" style="font-size:13px;font-weight:700;margin-top:6px"></div><div style="position:relative;height:160px;margin-top:8px"><canvas id="hch"></canvas></div><div id="hleg" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12px;margin-top:6px"></div></header>
  
 <div class="card hidden" id="bn" style="background:rgba(253,203,110,.25);font-size:14px"></div>
@@ -138,7 +138,7 @@ const REC=/type=recovery/.test(location.hash),RED=location.origin+location.pathn
 const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
 let okMode='signup';
 const CATS=[['Supermercado','🛒','#6C5CE7'],['Wifi','📶','#0984E3'],['Luz','💡','#FDCB6E'],['Agua','💧','#00B894'],['Calefacción','🔥','#E17055'],['Limpieza','🧹','#A3CB38'],['Otros','✨','#A0A6B8']];
-const COLS=['#6C5CE7','#E17055','#0984E3','#E84393','#FDCB6E','#A29BFE','#55EFC4','#D63031'];
+const COLS=['#6C7BFF','#FF7A59','#B15CFF','#FF5C8A','#35C2FF','#FFB04D','#3DDC97','#E0529C'];
 const NC=CATS.map(c=>c[0]),IC=Object.fromEntries(CATS.map(c=>[c[0],c[1]])),CC=Object.fromEntries(CATS.map(c=>[c[0],c[2]]));
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const pad=n=>String(n).padStart(2,'0'),iso=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
@@ -391,5 +391,3 @@ if(/otp_expired/.test(location.hash))$('#le').textContent='El enlace ha caducado
 if(REC&&session){$('#lForm').classList.add('hidden');$('#lNew').classList.remove('hidden');$('#login').classList.remove('hidden')}
 else session?entrar():$('#login').classList.remove('hidden');
 </script></body></html>
-
- 
