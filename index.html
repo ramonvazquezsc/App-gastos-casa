@@ -46,25 +46,52 @@ h1,h2,h3{font-family:var(--r);margin:0 0 12px}h3{font-size:15px;color:var(--mute
 .sb{width:100%;max-width:520px;background:var(--card);border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:92vh;overflow:auto}
 .toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#1E2233;color:#fff;padding:12px 18px;border-radius:14px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:90%;text-align:center}
 .toast.show{opacity:1}.toast.er{background:var(--red)}
+#login{max-width:none;min-height:100vh;padding:24px 16px;display:grid;place-items:center;background:linear-gradient(160deg,#6C5CE7 0%,#9B8CFF 55%,#C9BFFF 100%);position:relative;overflow:hidden}
+#login::before,#login::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.14)}
+#login::before{width:320px;height:320px;top:-110px;right:-90px}#login::after{width:240px;height:240px;bottom:-80px;left:-70px}
+#login .wrap{position:relative;z-index:1;width:100%;max-width:400px;text-align:center}
+#login .logo{width:84px;height:84px;border-radius:26px;margin:0 auto 14px;display:grid;place-items:center;background:linear-gradient(135deg,#6C5CE7,#9B8CFF);color:#fff;font-size:46px;font-weight:800;font-family:var(--r);box-shadow:0 0 0 4px rgba(255,255,255,.6),0 14px 34px rgba(40,20,120,.35)}
+#login h1{color:#fff;font-size:32px;margin:0 0 4px}#login .tag{color:rgba(255,255,255,.92);margin:0 0 20px;font-weight:600}
+.lc{background:var(--card);border-radius:26px;padding:20px;text-align:left;box-shadow:0 20px 50px rgba(30,20,100,.3)}
+.lc h2{margin:0 0 4px;font-size:21px}.lc .le{text-align:left}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--bg);padding:4px;border-radius:14px;margin-bottom:16px}
+.tabs button{border:0;background:none;padding:11px;border-radius:11px;font-weight:700;color:var(--muted)}.tabs button.on{background:var(--p);color:#fff;box-shadow:0 6px 16px rgba(108,92,231,.35)}
+.note{background:var(--ps);color:var(--p);border-radius:12px;padding:10px 12px;font-size:13px;font-weight:600;margin-bottom:12px}
+.ok{text-align:center}.ok .em{font-size:56px;margin-bottom:4px}.ok .sub{margin:0 0 10px}
+.feat{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:18px}.feat span{background:rgba(255,255,255,.2);color:#fff;padding:7px 12px;border-radius:99px;font-size:13px;font-weight:600}
 </style></head><body>
-
-<div id="login" class="hidden"><form id="lf" class="card"><h1>Gastos de casa</h1>
-<input id="em" type="email" placeholder="Email" autocomplete="username" required>
-<input id="pw" type="password" placeholder="Contraseña (mínimo 6)" autocomplete="current-password" minlength="6" required>
-<div class="le" id="le"></div><button class="btn primary" id="lb">Entrar</button>
-<button type="button" class="lnk" id="lm">Crear cuenta nueva</button></form></div>
-
+ 
+<div id="login" class="hidden"><div class="wrap">
+<div class="logo">€</div><h1>Gastos de casa</h1><p class="tag">Las cuentas claras, entre todos</p>
+<div class="lc">
+ <div id="lForm">
+  <div class="tabs"><button type="button" id="tIn" class="on">Entrar</button><button type="button" id="tUp">Crear cuenta</button></div>
+  <h2 id="lh">Bienvenido de nuevo 👋</h2><p class="sub" id="ls" style="margin:0 0 14px">Entra con tu correo y contraseña.</p>
+  <form id="lf">
+   <input id="em" type="email" placeholder="Email" autocomplete="username" required>
+   <input id="pw" type="password" placeholder="Contraseña" autocomplete="current-password" minlength="6" required>
+   <div class="note hidden" id="ln">✉️ Te enviaremos un correo para confirmar tu cuenta. Tendrás que abrirlo antes de poder entrar.</div>
+   <div class="le" id="le"></div><button class="btn primary" id="lb">Entrar</button>
+  </form>
+ </div>
+ <div id="lOk" class="ok hidden"><div class="em">✉️</div><h2>¡Revisa tu correo!</h2><p class="sub" id="lokt"></p>
+  <p class="sub">Abre el enlace del mensaje para activar tu cuenta (mira también en spam). Después vuelve aquí y entra.</p>
+  <button class="btn primary" id="lGo">Ya lo he confirmado, entrar</button><button class="lnk" id="lRe">Reenviar el correo</button></div>
+</div>
+<div class="feat"><span>👥 Gastos compartidos</span><span>📊 Resumen claro</span><span>💶 Cuentas al día</span></div>
+</div></div>
+ 
 <div id="onb" class="hidden"><div class="card"><h2>¡Bienvenido!</h2><p class="sub">Elige cómo quieres llamarte y crea tu hogar o únete a uno existente.</p>
 <input id="oN" placeholder="Tu nombre (ej. Ana)" maxlength="30">
 <h3>Crear un hogar nuevo</h3><input id="oH" placeholder="Nombre del hogar (ej. Piso Centro)" maxlength="60">
 <button class="btn primary" id="oC">Crear hogar</button></div>
 <div class="card"><h3>O unirme con un código</h3><input id="oK" placeholder="Código de invitación"><button class="btn primary" id="oU">Unirme</button></div>
 <button class="lnk" id="oO">Cerrar sesión</button></div>
-
+ 
 <div id="app" class="hidden">
 <header class="hero"><div class="ht"><span id="th"></span><span><button class="ib" id="thm" title="Cambiar tema">🌙</button><button class="ib" id="inv" title="Invitar">👥</button><button class="ib" id="out" title="Salir">⏻</button></span></div>
 <div class="big" id="tot">0,00 €</div><small>gastado en <span id="mn"></span></small><div id="hcmp" style="font-size:13px;font-weight:700;margin-top:6px"></div><div style="position:relative;height:160px;margin-top:8px"><canvas id="hch"></canvas></div><div id="hleg" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12px;margin-top:6px"></div></header>
-
+ 
 <div class="card hidden" id="bn" style="background:rgba(253,203,110,.25);font-size:14px"></div>
 <section id="v-add"><div class="card amt"><small>Importe</small><input id="imp" inputmode="decimal" placeholder="0,00" autocomplete="off"></div>
 <div class="card"><small>¿Quién lo paga?</small><div class="seg" id="sp" style="margin-top:8px"></div>
@@ -72,24 +99,24 @@ h1,h2,h3{font-family:var(--r);margin:0 0 12px}h3{font-size:15px;color:var(--mute
 <input id="det" class="hidden" placeholder="¿Qué gasto es?" autocomplete="off">
 <small>Fecha</small><div class="chips" style="margin-top:8px"><button class="chip" data-f="0">Hoy</button><button class="chip" data-f="1">Ayer</button></div><input type="date" id="fec"></div>
 <button class="btn primary" id="sav">Guardar gasto</button><h3 style="margin-top:22px">Últimos gastos</h3><div id="rec"></div></section>
-
+ 
 <section id="v-sum" class="hidden"><div class="card" id="deuda"></div>
 <div class="flt"><select id="fP" class="full"></select><select id="fQ"></select><select id="fC"></select></div>
 <div id="se" class="empty hidden">No hay gastos con estos filtros.</div>
 <div id="sb2"><div class="card" id="kpi"></div><div class="card"><h3>Evolución</h3><div class="cb"><canvas id="ch"></canvas></div></div>
 <div class="card"><h3>En qué se va el dinero</h3><div id="rk"></div></div></div></section>
-
+ 
 <section id="v-list" class="hidden"><input id="bus" type="search" placeholder="🔍 Buscar por concepto o persona"><button class="chip" id="csv" style="margin-bottom:10px">⬇️ Exportar a Excel (CSV)</button><div id="movs"></div></section>
 </div>
-
+ 
 <nav class="nav hidden" id="nav"><button data-t="add" class="on">➕<br>Añadir</button><button data-t="sum">📊<br>Resumen</button><button data-t="list">📋<br>Movimientos</button></nav>
-
+ 
 <div class="sheet hidden" id="sheet"><div class="sb"><h2>Editar gasto</h2>
 <input id="sI" inputmode="decimal"><div class="seg" id="sS"></div><select id="sC"></select>
 <input id="sD" class="hidden" placeholder="¿Qué gasto es?"><input type="date" id="sF">
 <button class="btn primary" id="sG">Guardar cambios</button><button class="btn red" id="sB">Borrar gasto</button><button class="btn" id="sX">Cancelar</button></div></div>
 <div class="toast" id="toast"></div>
-
+ 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <script type="module">
 import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
@@ -116,17 +143,27 @@ const toast=(m,e)=>{const t=$('#toast');t.textContent=m;t.classList.toggle('er',
 const nombreDe=u=>S.mi.find(m=>m.user_id===u)?.nombre||'Compartido';
 const uid=n=>S.mi.find(m=>m.nombre===n)?.user_id??null;
 const segP=(el,act)=>el.innerHTML=PER.map(p=>`<button data-p="${esc(p)}" class="${p===act?'on':''}" style="--c:${COL[p]}">${esc(p)}</button>`).join('');
-
+ 
 /* ---------- Login / registro ---------- */
-$('#lm').onclick=()=>{signup=!signup;$('#lb').textContent=signup?'Crear cuenta':'Entrar';$('#lm').textContent=signup?'Ya tengo cuenta':'Crear cuenta nueva';$('#le').textContent=''};
+const modo=up=>{signup=up;$('#tIn').classList.toggle('on',!up);$('#tUp').classList.toggle('on',up);
+ $('#lh').textContent=up?'Crea tu cuenta ✨':'Bienvenido de nuevo 👋';
+ $('#ls').textContent=up?'Es gratis. Después podrás crear tu hogar o unirte al de alguien.':'Entra con tu correo y contraseña.';
+ $('#lb').textContent=up?'Crear mi cuenta':'Entrar';$('#ln').classList.toggle('hidden',!up);$('#le').textContent='';
+ $('#pw').placeholder=up?'Contraseña (mínimo 6 caracteres)':'Contraseña';$('#pw').autocomplete=up?'new-password':'current-password'};
+$('#tIn').onclick=()=>modo(false);$('#tUp').onclick=()=>modo(true);
+const errA=m=>/already registered|already been registered/i.test(m)?'Ese correo ya tiene cuenta. Pulsa «Entrar» para acceder.':/not confirmed/i.test(m)?'Aún no has confirmado tu correo. Abre el enlace que te enviamos.':/invalid login/i.test(m)?'Email o contraseña incorrectos.':/rate limit/i.test(m)?'Demasiados intentos. Espera un rato y vuelve a probar.':m;
 $('#lf').onsubmit=async e=>{e.preventDefault();$('#le').textContent='';const b=$('#lb');b.disabled=true;
  const c={email:$('#em').value.trim(),password:$('#pw').value};
- const {data,error}=signup?await sb.auth.signUp(c):await sb.auth.signInWithPassword(c);b.disabled=false;
- if(error){$('#le').textContent=signup?error.message:'Email o contraseña incorrectos.';return}
- if(signup&&!data.session){$('#le').textContent='Revisa tu correo para confirmar la cuenta y vuelve a entrar.';return}
+ const {data,error}=signup?await sb.auth.signUp({...c,options:{emailRedirectTo:location.origin+location.pathname}}):await sb.auth.signInWithPassword(c);b.disabled=false;
+ if(error){$('#le').textContent=errA(error.message);return}
+ if(signup&&!data.session){
+  if(data.user&&data.user.identities&&!data.user.identities.length){$('#le').textContent=errA('already registered');return}
+  $('#lokt').innerHTML=`Hemos enviado un enlace de confirmación a <b>${esc(c.email)}</b>.`;$('#lForm').classList.add('hidden');$('#lOk').classList.remove('hidden');return}
  entrar()};
+$('#lGo').onclick=()=>{$('#lOk').classList.add('hidden');$('#lForm').classList.remove('hidden');modo(false)};
+$('#lRe').onclick=async()=>{const {error}=await sb.auth.resend({type:'signup',email:$('#em').value.trim()});toast(error?errA(error.message):'Correo reenviado ✉️',!!error)};
 $('#out').onclick=$('#oO').onclick=async()=>{await sb.auth.signOut();location.reload()};
-
+ 
 const tema=()=>{$('#thm').textContent=document.documentElement.dataset.theme=='dark'?'☀️':'🌙'};
 $('#thm').onclick=()=>{const n=document.documentElement.dataset.theme=='dark'?'light':'dark';document.documentElement.dataset.theme=n;try{localStorage.setItem('tema',n)}catch{}tema();if(S.tab=='sum')renderRes()};tema();
 /* ---------- Hogar ---------- */
@@ -147,7 +184,7 @@ async function cargarHogar(){
  COL=Object.fromEntries([...S.mi.map(m=>[m.nombre,m.color]),['Compartido','#00B894']]);
  if(!PER.includes(S.persona))S.persona=yo.nombre;
  document.title=S.hogar.nombre;$('#th').textContent=S.hogar.nombre;return true}
-
+ 
 /* ---------- Datos ---------- */
 async function cargar(){
  const {data,error}=await sb.from('gastos').select('*').order('fecha',{ascending:false}).order('id',{ascending:false}).limit(5000);
@@ -164,7 +201,7 @@ function render(){const [a,b]=mesR(0);
  $('#mn').textContent=new Date().toLocaleDateString('es-ES',{month:'long'});hero();if(!bx)inactividad();
  const r=S.g.slice(0,5);$('#rec').innerHTML=r.length?r.map(item).join(''):'<div class="empty">Aún no hay gastos 👆</div>';
  if(S.tab=='sum')renderRes();if(S.tab=='list')renderMovs()}
-
+ 
 let hc;
 function hero(){const n=new Date(),y=n.getFullYear(),m=n.getMonth(),h=n.getDate(),dm=new Date(y,m+1,0).getDate(),dp=new Date(y,m,0).getDate(),[a,b]=mesR(0),[pa,pb]=mesR(-1);
  const acu=(i,f,d,t)=>{const q=Array(d).fill(0);S.g.forEach(g=>{if(g.fecha>=i&&g.fecha<=f)q[+g.fecha.slice(8,10)-1]+=g.importe});let c=0;return q.map((v,k)=>{c+=v;return k<t?r2(c):null})};
@@ -193,7 +230,7 @@ async function guardar(){
  const {error}=await sb.from('gastos').insert({hogar_id:S.hogar.id,fecha,importe,pagador:uid(S.persona),concepto:S.cat,detalle:S.cat=='Otros'?det:null});
  b.disabled=false;if(error)return toast('Error: '+error.message,1);
  toast(`✅ ${eur(importe)} guardados en «${S.cat}»`);$('#imp').value='';$('#det').value='';S.cat=null;renderCats();await cargar()}
-
+ 
 /* ---------- Cuentas (N personas) ---------- */
 function saldo(k){const m=S.g.filter(g=>g.fecha.slice(0,7)==k),n=S.mi.length,pag={};
  S.mi.forEach(x=>pag[x.nombre]=sum(m.filter(g=>g.persona==x.nombre)));
@@ -224,7 +261,7 @@ $('#deuda').onclick=async e=>{const b=e.target.closest('button');if(!b||!b.datas
  const {error}=b.id=='bL'?await sb.from('liquidaciones').upsert({hogar_id:S.hogar.id,mes:b.dataset.k,importe:saldo(b.dataset.k).total,liquidado_el:new Date().toISOString()})
   :await sb.from('liquidaciones').delete().eq('hogar_id',S.hogar.id).eq('mes',b.dataset.k);
  if(error){b.disabled=false;return toast(error.message,1)}await cargar()};
-
+ 
 /* ---------- Resumen ---------- */
 function renderRes(){renderDeuda();
  const o=(l,a)=>l.map(([v,t])=>`<option value="${esc(v)}" ${v==a?'selected':''}>${esc(t)}</option>`).join('');
@@ -246,7 +283,7 @@ function renderRes(){renderDeuda();
  const m=new Map();f.forEach(g=>m.set(g.tipo,(m.get(g.tipo)||0)+g.importe));
  $('#rk').innerHTML=[...m].sort((x,y)=>y[1]-x[1]).map(([t,v])=>`<div class="rk"><div class="rt"><span>${IC[t]} ${t}</span><b>${eur(v)}</b></div><div class="bar"><span style="width:${v/tot*100}%;background:${CC[t]}"></span></div></div>`).join('')}
 $('#fP').onchange=e=>{S.per=e.target.value;renderRes()};$('#fQ').onchange=e=>{S.q=e.target.value;renderRes()};$('#fC').onchange=e=>{S.ct=e.target.value;renderRes()};
-
+ 
 /* ---------- Movimientos y edición ---------- */
 function renderMovs(){const q=$('#bus').value.trim().toLowerCase();
  const r=S.g.filter(g=>!q||[g.tipo,g.detalle,g.persona].some(x=>x.toLowerCase().includes(q))).slice(0,200);
@@ -271,7 +308,7 @@ $('#sG').onclick=async()=>{const importe=num($('#sI').value),c=$('#sC').value,d=
 $('#sB').onclick=async()=>{if(!confirm('¿Borrar este gasto?'))return;
  const {error}=await sb.from('gastos').delete().eq('id',S.edit.id);if(error)return toast(error.message,1);cerrar();toast('Gasto borrado 🗑️');await cargar()};
 const abre=e=>{const i=e.target.closest('.item');if(i)abrir(i.dataset.id)};$('#movs').onclick=abre;$('#rec').onclick=abre;
-
+ 
 /* ---------- Navegación e inicio ---------- */
 function tab(t){S.tab=t;['add','sum','list'].forEach(x=>$('#v-'+x).classList.toggle('hidden',x!=t));
  $$('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));scrollTo(0,0);if(t=='sum'){S.dm=null;renderRes()}if(t=='list')renderMovs()}
