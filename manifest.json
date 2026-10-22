@@ -1,12 +1,35 @@
 {
-  "name": "Gastos de casa",
-  "short_name": "Gastos",
+  "name": "Hogga",
+  "short_name": "Hogga",
+  "description": "Gastos de hogar, sin complicaciones",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#F4F5FB",
-  "theme_color": "#6C5CE7",
+  "background_color": "#0A0B26",
+  "theme_color": "#0B0C2A",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
