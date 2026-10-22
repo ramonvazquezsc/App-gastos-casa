@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0B0C2A"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hogga"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://smupetzjjgohsndtvdre.supabase.co" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@800&display=swap" rel="stylesheet">
 <title>Hogga</title>
 <script>try{var t=localStorage.getItem("tema");if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme="light"}try{document.documentElement.dataset.paleta=localStorage.getItem("paleta")||"medianoche"}catch(e){document.documentElement.dataset.paleta="medianoche"}</script>
 <style>
@@ -21,6 +21,13 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 svg{display:block}
 #app,#login,#onb{max-width:520px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 14px) 16px calc(112px + env(safe-area-inset-bottom,0px))}
 input,select{width:100%;font:inherit;font-size:16px;padding:14px 16px;border-radius:14px;border:1px solid transparent;background-color:var(--fill);color:var(--text);margin-bottom:10px;transition:border-color .15s,box-shadow .15s}
+input[type=date]{display:block;min-width:0;max-width:100%;-webkit-appearance:none;appearance:none;min-height:52px;text-align:left;line-height:1.2}
+input[type=date]::-webkit-date-and-time-value{text-align:left;min-width:0}
+input[type=date]::-webkit-datetime-edit{padding:0}
+.card>*,.rg>*{min-width:0}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:10px}.rg small{display:block;margin-bottom:6px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.4;margin:0 0 12px;color:var(--muted)}.chk input{width:20px;height:20px;margin:1px 0 0;padding:0;flex:none;accent-color:var(--p)}.chk a{color:var(--p);font-weight:600}
+#mm{margin-top:10px}#mi{margin:2px 2px 12px}
 input:focus,select:focus{outline:0;border-color:var(--p);box-shadow:0 0 0 4px var(--ps)}
 input::placeholder{color:var(--muted);opacity:.8}
 select{-webkit-appearance:none;appearance:none;padding-right:40px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:20px}
@@ -72,7 +79,7 @@ small,.sub{color:var(--muted);font-size:13px}
 .flt{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.flt .full{grid-column:1/-1}.cb{position:relative;height:240px}
 .empty{text-align:center;color:var(--muted);padding:34px 20px}
 #bus{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:14px center;background-size:18px;padding-left:44px}
-#bus,.flt select{background-color:var(--card);border-color:var(--bd);box-shadow:var(--sh)}
+#bus,#mP,.flt select{background-color:var(--card);border-color:var(--bd);box-shadow:var(--sh)}
 #csv{background:var(--card);border-color:var(--bd)}
 section{animation:in .38s cubic-bezier(.2,.8,.2,1)}
 @keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -118,6 +125,7 @@ section{animation:in .38s cubic-bezier(.2,.8,.2,1)}
    <input id="em" type="email" placeholder="Email" autocomplete="username" required>
    <input id="pw" type="password" placeholder="Contraseña" autocomplete="current-password" minlength="6" required>
    <div class="note hidden" id="ln">Te enviaremos un correo para confirmar tu cuenta. Tendrás que abrirlo antes de poder entrar.</div>
+   <label class="chk hidden" id="lc"><input type="checkbox" id="cc"><span>He leído y acepto la <a href="privacidad.html" target="_blank" rel="noopener">política de privacidad</a>.</span></label>
    <div class="le" id="le"></div><button class="btn primary" id="lb">Entrar</button><button type="button" class="lnk" id="lFg">¿Has olvidado tu contraseña?</button>
   </form>
  </div>
@@ -145,7 +153,7 @@ section{animation:in .38s cubic-bezier(.2,.8,.2,1)}
 <section id="v-add"><div class="card amt"><small>Importe</small><input id="imp" inputmode="decimal" placeholder="0,00" autocomplete="off"></div>
 <div class="card"><small>¿Quién lo paga?</small><div class="seg" id="sp" style="margin-top:8px"></div>
 <small>Concepto</small><div class="cats" id="cats" style="margin-top:8px"></div>
-<input id="det" class="hidden" placeholder="¿Qué gasto es?" autocomplete="off">
+<input id="det" maxlength="120" class="hidden" placeholder="¿Qué gasto es?" autocomplete="off">
 <small>Fecha</small><div class="chips" style="margin-top:8px"><button class="chip" data-f="0">Hoy</button><button class="chip" data-f="1">Ayer</button></div><input type="date" id="fec"></div>
 <button class="btn primary" id="sav">Guardar gasto</button><h3 class="st">Últimos gastos</h3><div id="rec"></div></section>
  
@@ -155,7 +163,10 @@ section{animation:in .38s cubic-bezier(.2,.8,.2,1)}
 <div id="sb2"><div class="card" id="kpi"></div><div class="card"><h3>Evolución</h3><div class="cb"><canvas id="ch"></canvas></div></div>
 <div class="card"><h3>En qué se va el dinero</h3><div id="rk"></div></div></div></section>
  
-<section id="v-list" class="hidden"><input id="bus" type="search" placeholder="Buscar por concepto o persona"><button class="chip" id="csv" style="margin-bottom:12px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 20h14"/></svg>Exportar a Excel (CSV)</button><div id="movs"></div></section>
+<section id="v-list" class="hidden"><input id="bus" type="search" placeholder="Buscar por concepto o persona">
+<select id="mP"><option value="2d">Últimos 2 días</option><option value="7d">Últimos 7 días</option><option value="mes">Este mes</option><option value="mp">Mes pasado</option><option value="anio">Este año</option><option value="todo">Todo el historial</option><option value="rng">Elegir fechas…</option></select>
+<div class="rg hidden" id="mR"><div><small>Desde</small><input type="date" id="mD"></div><div><small>Hasta</small><input type="date" id="mH"></div></div>
+<div class="sub" id="mi"></div><button class="chip" id="csv" style="margin-bottom:12px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 20h14"/></svg>Exportar a Excel (CSV)</button><div id="movs"></div><button class="btn hidden" id="mm">Ver más</button></section>
 </div>
  
 <nav class="nav hidden" id="nav"><button data-t="add" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span>Añadir</span></button><button data-t="sum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-9M12 20V4M19 20v-6"/></svg><span>Resumen</span></button><button data-t="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1" fill="currentColor"/><circle cx="4.5" cy="12" r="1" fill="currentColor"/><circle cx="4.5" cy="18" r="1" fill="currentColor"/></svg><span>Movimientos</span></button></nav>
@@ -170,12 +181,13 @@ section{animation:in .38s cubic-bezier(.2,.8,.2,1)}
 <div class="mrow"><input id="mgN" placeholder="Añadir persona" maxlength="30"><button class="ib2" id="mgA" title="Añadir" aria-label="Añadir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
 <h3 style="margin-top:18px">Color de la app</h3><div class="pal" id="pal"><button data-p="medianoche" title="Medianoche" aria-label="Medianoche" style="--a:#3D63F5;--b:#6B4EFF"></button><button data-p="menta" title="Menta" aria-label="Menta" style="--a:#0C9660;--b:#14B8A6"></button><button data-p="oceano" title="Océano" aria-label="Océano" style="--a:#0A84FF;--b:#38BDF8"></button><button data-p="ambar" title="Ámbar" aria-label="Ámbar" style="--a:#D66E0A;--b:#FABE32"></button></div>
 <div class="sub">Si quitas a alguien, sus gastos siguen en el historial. Las cuentas de meses pasados se recalculan con los integrantes actuales, así que liquida el mes antes de hacer cambios.</div>
+<div class="sub" style="margin-top:12px"><a href="privacidad.html" target="_blank" rel="noopener" style="color:var(--p);font-weight:600">Política de privacidad</a></div><button class="btn" id="mgDel" style="margin-top:12px;color:#E5484D">Eliminar mi cuenta y todos mis datos</button>
 <button class="btn" id="mgX">Cerrar</button></div></div>
 <div class="toast" id="toast"></div>
  
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script type="module">
-import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';
 // ====== PEGA AQUÍ LOS DATOS DE TU PROYECTO NUEVO (Supabase > Project Settings > API) ======
 const SUPABASE_URL='https://smupetzjjgohsndtvdre.supabase.co';
 const SUPABASE_KEY='sb_publishable_YyoSh1ONzRXFsN5bxUA4dg_9gbsVbd5';
@@ -185,7 +197,14 @@ const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
 let okMode='signup';
 try{Chart.defaults.font.family='Inter,-apple-system,"Segoe UI",system-ui,sans-serif'}catch{}
 const CATS=[['Supermercado','🛒','#6C5CE7'],['Wifi','📶','#0984E3'],['Luz','💡','#FDCB6E'],['Agua','💧','#00B894'],['Calefacción','🔥','#E17055'],['Limpieza','🧹','#A3CB38'],['Otros','✨','#A0A6B8']];
-const COLS=['#6C7BFF','#FF7A59','#B15CFF','#FF5C8A','#35C2FF','#FFB04D','#3DDC97','#E0529C'];
+const COLS=['#6C7BFF','#FF7A59','#B15CFF','#FF5C8A','#35C2FF','#FFB04D','#84CC16','#E0529C','#F5D13B','#8B5E3C'];
+const hsl=(h,sa,l)=>{sa/=100;l/=100;const k=n=>(n+h/30)%12,a=sa*Math.min(l,1-l),f=n=>l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1)));return'#'+[f(0),f(8),f(4)].map(x=>Math.round(x*255).toString(16).padStart(2,'0')).join('').toUpperCase()};
+const hueOf=c=>{const r=parseInt(c.slice(1,3),16)/255,g=parseInt(c.slice(3,5),16)/255,b=parseInt(c.slice(5,7),16)/255,M=Math.max(r,g,b),m=Math.min(r,g,b),d=M-m;if(!d)return 0;let h=M==r?((g-b)/d)%6:M==g?(b-r)/d+2:(r-g)/d+4;return(h*60+360)%360};
+/* Devuelve un color que ningún integrante (activo o no) está usando; si se acaba la paleta, genera el más alejado en tono */
+function colorNuevo(usados){const u=new Set(usados.map(c=>String(c).toUpperCase()));u.add('#00B894');
+ const f=COLS.find(c=>!u.has(c.toUpperCase()));if(f)return f;
+ const hs=[...u].map(hueOf);let best='#6C7BFF',bd=-1;
+ for(let h=0;h<360;h+=3){const d=Math.min(...hs.map(x=>{const t=Math.abs(x-h);return Math.min(t,360-t)}));if(d>bd){bd=d;best=hsl(h,68,58)}}return best}
 const NC=CATS.map(c=>c[0]),IC=Object.fromEntries(CATS.map(c=>[c[0],c[1]])),CC=Object.fromEntries(CATS.map(c=>[c[0],c[2]]));
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const pad=n=>String(n).padStart(2,'0'),iso=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
@@ -197,7 +216,7 @@ const sum=a=>a.reduce((s,g)=>s+g.importe,0);
 const num=v=>{const n=parseFloat(String(v).replace(/\s/g,'').replace(',','.'));return isFinite(n)?r2(n):NaN};
 const fc=s=>new Date(s+'T00:00:00').toLocaleDateString('es-ES',{day:'numeric',month:'short'});
 const mesN=k=>cap(new Date(k+'-01T00:00:00').toLocaleDateString('es-ES',{month:'long',year:'numeric'}).replace(' de ',' '));
-const S={g:[],mi:[],all:[],hogar:null,tab:'add',cat:null,persona:null,per:'mes',q:'',ct:'',dm:null,liq:{},edit:null};
+const S={g:[],mi:[],all:[],hogar:null,tab:'add',cat:null,persona:null,per:'mes',q:'',ct:'',dm:null,liq:{},edit:null,mp:'2d',lim:50,desde:'9999',ult:null};
 let PER=[],COL={},chart,bound=false,signup=false,tt;
 const toast=(m,e)=>{const t=$('#toast');t.textContent=m;t.classList.toggle('er',!!e);t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2800)};
 const nombreDe=u=>S.all.find(m=>m.id===u)?.nombre||'Compartido';
@@ -208,11 +227,11 @@ const segP=(el,act)=>el.innerHTML=PER.map(p=>`<button data-p="${esc(p)}" class="
 const modo=up=>{signup=up;$('#tIn').classList.toggle('on',!up);$('#tUp').classList.toggle('on',up);
  $('#lh').textContent=up?'Crea tu cuenta':'Bienvenido de nuevo';
  $('#ls').textContent=up?'Es gratis. Después crearás tu hogar y apuntarás a quienes viven en él.':'Entra con tu correo y contraseña.';
- $('#lb').textContent=up?'Crear mi cuenta':'Entrar';$('#lFg').classList.toggle('hidden',up);$('#ln').classList.toggle('hidden',!up);$('#le').textContent='';
+ $('#lb').textContent=up?'Crear mi cuenta':'Entrar';$('#lFg').classList.toggle('hidden',up);$('#ln').classList.toggle('hidden',!up);$('#lc').classList.toggle('hidden',!up);$('#le').textContent='';
  $('#pw').placeholder=up?'Contraseña (mínimo 6 caracteres)':'Contraseña';$('#pw').autocomplete=up?'new-password':'current-password'};
 $('#tIn').onclick=()=>modo(false);$('#tUp').onclick=()=>modo(true);
 const errA=m=>/already registered|already been registered/i.test(m)?'Ese correo ya tiene cuenta. Pulsa «Entrar» para acceder.':/not confirmed/i.test(m)?'Aún no has confirmado tu correo. Abre el enlace que te enviamos.':/invalid login/i.test(m)?'Email o contraseña incorrectos.':/rate limit/i.test(m)?'Demasiados intentos. Espera un rato y vuelve a probar.':m;
-$('#lf').onsubmit=async e=>{e.preventDefault();$('#le').textContent='';const b=$('#lb');b.disabled=true;
+$('#lf').onsubmit=async e=>{e.preventDefault();$('#le').textContent='';if(signup&&!$('#cc').checked){$('#le').textContent='Acepta la política de privacidad para crear tu cuenta.';return}const b=$('#lb');b.disabled=true;
  const c={email:$('#em').value.trim(),password:$('#pw').value};
  const {data,error}=signup?await sb.auth.signUp({...c,options:{emailRedirectTo:RED}}):await sb.auth.signInWithPassword(c);b.disabled=false;
  if(error){$('#le').textContent=errA(error.message);return}
@@ -255,7 +274,8 @@ $('#oC').onclick=async()=>{const h=$('#oH').value.trim(),ns=$$('#oL input').map(
  const b=$('#oC');b.disabled=true;
  const {data,error}=await sb.from('hogares').insert({nombre:h}).select().single();
  if(error){b.disabled=false;return toast(error.message,1)}
- const {error:e2}=await sb.from('miembros').insert(ns.map((n,i)=>({hogar_id:data.id,nombre:n,color:COLS[i%COLS.length],orden:i})));
+ const us=[],rows=ns.map((n,i)=>{const c=colorNuevo(us);us.push(c);return{hogar_id:data.id,nombre:n,color:c,orden:i}});
+ const {error:e2}=await sb.from('miembros').insert(rows);
  b.disabled=false;e2?toast(e2.message,1):entrar()};
  
 /* ---------- Hogar: carga e integrantes ---------- */
@@ -267,9 +287,11 @@ async function cargarHogar(){
  if(e1){toast(e1.message,1);return false}if(!h)return false;
  const {data:ms,error}=await sb.from('miembros').select('*').order('orden').order('creado_en');
  if(error){toast(error.message,1);return false}
+ const vistos=new Set(['#00B894']);
+ for(const m of ms){const k=String(m.color).toUpperCase();if(vistos.has(k)){const c=colorNuevo(ms.map(x=>x.color));m.color=c;sb.from('miembros').update({color:c}).eq('id',m.id).then(()=>{})}vistos.add(String(m.color).toUpperCase())}
  S.hogar=h;S.all=ms;S.mi=ms.filter(m=>m.activo);setPer();
  document.title=h.nombre;$('#th').textContent=h.nombre;return true}
-async function refrescar(){await cargarHogar();renderMg();segP($('#sp'),S.persona);await cargar()}
+async function refrescar(){await cargarHogar();renderMg();segP($('#sp'),S.persona);S.g=S.g.map(norm);render()}
 function renderMg(){$('#mgl').innerHTML=S.mi.map(m=>`<div class="mrow"><i class="dot" style="background:${m.color}"></i><input data-id="${m.id}" value="${esc(m.nombre)}" maxlength="30"><button class="ib2" data-d="${m.id}" title="Quitar" aria-label="Quitar">${ICO.trash}</button></div>`).join('')}
 $('#mg').onclick=()=>{$('#mgH').value=S.hogar.nombre;renderMg();$('#mgs').classList.remove('hidden')};
 const cierraMg=()=>$('#mgs').classList.add('hidden');
@@ -284,7 +306,7 @@ $('#mgl').onchange=async e=>{const i=e.target,n=cap(i.value.trim()),m=S.all.find
  if(error){i.value=m.nombre;return toast(errH(error),1)}toast('Nombre cambiado ✅');await refrescar()};
 $('#mgl').onclick=async e=>{const b=e.target.closest('[data-d]');if(!b)return;const m=S.all.find(x=>x.id==b.dataset.d);if(!m)return;
  if(S.mi.length<2)return toast('Tiene que quedar al menos una persona',1);
- const usado=S.g.some(g=>g.pagador==m.id);
+ const {count}=await sb.from('gastos').select('id',{count:'exact',head:true}).eq('pagador',m.id),usado=count>0;
  if(!confirm(usado?`¿Quitar a ${m.nombre}? Sus gastos se mantienen en el historial.`:`¿Quitar a ${m.nombre}?`))return;
  const {error}=usado?await sb.from('miembros').update({activo:false}).eq('id',m.id):await sb.from('miembros').delete().eq('id',m.id);
  if(error)return toast(errH(error),1);toast('Integrante quitado');await refrescar()};
@@ -292,17 +314,36 @@ $('#mgA').onclick=async()=>{const n=cap($('#mgN').value.trim());if(!n)return;
  const old=S.all.find(x=>x.nombre.toLowerCase()==n.toLowerCase());
  if((old&&old.activo)||n.toLowerCase()=='compartido')return toast('Ese nombre ya existe',1);
  const {error}=old?await sb.from('miembros').update({activo:true}).eq('id',old.id)
-  :await sb.from('miembros').insert({hogar_id:S.hogar.id,nombre:n,color:COLS[S.all.length%COLS.length],orden:S.all.length});
+  :await sb.from('miembros').insert({hogar_id:S.hogar.id,nombre:n,color:colorNuevo(S.all.map(x=>x.color)),orden:S.all.length});
  if(error)return toast(errH(error),1);$('#mgN').value='';toast(`${n} añadido ✅`);await refrescar()};
  
 /* ---------- Datos ---------- */
+const CQ='id,fecha,importe,pagador,concepto,detalle,creado_en';
+const norm=g=>({...g,importe:Number(g.importe),tipo:NC.includes(g.concepto)?g.concepto:'Otros',detalle:g.detalle||'',persona:nombreDe(g.pagador)});
+const ordena=()=>S.g.sort((x,y)=>x.fecha<y.fecha?1:x.fecha>y.fecha?-1:y.id-x.id);
+/* Trae los gastos de un rango por páginas de 1000 (solo las columnas necesarias) */
+async function traer(desde,hasta){let out=[],from=0;
+ for(;;){let q=sb.from('gastos').select(CQ).order('fecha',{ascending:false}).order('id',{ascending:false}).range(from,from+999);
+  if(desde&&desde>'0001')q=q.gte('fecha',desde);if(hasta)q=q.lte('fecha',hasta);
+  const {data,error}=await q;if(error)throw error;out=out.concat(data);if(data.length<1000||out.length>=20000)break;from+=1000}
+ return out}
+/* Carga inicial: solo mes pasado + mes actual. Lo demás se pide bajo demanda y se guarda en memoria */
 async function cargar(){
- const {data,error}=await sb.from('gastos').select('*').order('fecha',{ascending:false}).order('id',{ascending:false}).limit(5000);
- if(error)return toast('No se pudo cargar: '+error.message,1);
- const {data:l}=await sb.from('liquidaciones').select('*');
- S.liq=Object.fromEntries((l||[]).map(x=>[x.mes,{...x,importe:Number(x.importe)}]));
- S.g=data.map(g=>({...g,importe:Number(g.importe),tipo:NC.includes(g.concepto)?g.concepto:'Otros',detalle:g.detalle||'',persona:nombreDe(g.pagador)}));
+ try{S.desde=mesR(-1)[0];
+  const [rows,l,u]=await Promise.all([traer(S.desde),sb.from('liquidaciones').select('mes,importe,liquidado_el'),sb.from('gastos').select('creado_en').order('creado_en',{ascending:false}).limit(1)]);
+  if(l.error)throw l.error;
+  S.liq=Object.fromEntries((l.data||[]).map(x=>[x.mes,{...x,importe:Number(x.importe)}]));
+  S.ult=u.data?.[0]?.creado_en||null;S.g=rows.map(norm)}
+ catch(e){return toast('No se pudo cargar: '+e.message,1)}
  render()}
+let cargando=null;
+/* Amplía lo cargado hasta la fecha «desde» (solo pide el tramo que falta) */
+function asegura(desde){if(desde>=S.desde)return Promise.resolve();
+ if(cargando)return cargando.then(()=>asegura(desde));
+ cargando=(async()=>{const filas=await traer(desde<'0001'?null:desde,S.desde);const ids=new Set(S.g.map(g=>g.id));
+  filas.forEach(g=>{if(!ids.has(g.id))S.g.push(norm(g))});S.desde=desde<'0001'?'0000':desde;ordena()})().finally(()=>{cargando=null});
+ return cargando}
+const antes12=d=>d<'0001'?d:(+d.slice(0,4)-1)+d.slice(4);
 const item=g=>`<button class="item" data-id="${g.id}"><span class="ico" style="--c:${CC[g.tipo]}">${IC[g.tipo]}</span><span class="grow"><b>${g.tipo}</b><small>${g.detalle?esc(g.detalle)+' · ':''}<i class="dot sm" style="background:${COL[g.persona]}"></i>${esc(g.persona)} · ${fc(g.fecha)}</small></span><b class="v">${eur(g.importe)}</b></button>`;
 function mesR(o=0){const n=new Date(),y=n.getFullYear(),m=n.getMonth()+o;return[iso(new Date(y,m,1)),iso(new Date(y,m+1,0))]}
 function rango(){const y=new Date().getFullYear();return S.per=='mes'?mesR(0):S.per=='mp'?mesR(-1):S.per=='anio'?[`${y}-01-01`,`${y}-12-31`]:['0000','9999']}
@@ -325,7 +366,7 @@ function hero(){const n=new Date(),y=n.getFullYear(),m=n.getMonth(),h=n.getDate(
   options:{responsive:true,maintainAspectRatio:false,animation:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{title:i=>'Día '+i[0].label,label:c=>`${c.dataset.label}: ${eur(c.parsed.y)}`}}},
   scales:{x:{grid:{display:false},border:{display:false},ticks:{color:'rgba(255,255,255,.85)',autoSkip:false,maxRotation:0,callback:(v,i)=>(i==0||(i+1)%5==0)?i+1:''}},y:{beginAtZero:true,border:{display:false},grid:{color:'rgba(255,255,255,.18)'},ticks:{color:'rgba(255,255,255,.85)',maxTicksLimit:4,callback:v=>v+' €'}}}}})}
 let bx=false;
-function inactividad(){const m=[...S.g.map(g=>g.creado_en),...Object.values(S.liq).map(l=>l.liquidado_el)].filter(Boolean).map(t=>+new Date(t)),b=$('#bn');
+function inactividad(){const m=[S.ult,...Object.values(S.liq).map(l=>l.liquidado_el)].filter(Boolean).map(t=>+new Date(t)),b=$('#bn');
  const d=m.length?Math.floor((Date.now()-Math.max(...m))/864e5):0;
  if(d>=7){b.innerHTML=`⏰ Hace <b>${d} días</b> que no se anota ningún gasto. ¿Se os ha olvidado alguno? <button class="lnk" id="bx" style="width:auto;padding:0 8px;float:right">×</button>`;b.classList.remove('hidden')}else b.classList.add('hidden')}
 document.addEventListener('click',e=>{if(e.target.id=='bx'){bx=true;$('#bn').classList.add('hidden')}});
@@ -338,9 +379,10 @@ async function guardar(){
  if(!(importe>0))return toast('Escribe el importe',1);if(!S.cat)return toast('Elige un concepto',1);
  if(S.cat=='Otros'&&!det)return toast('Escribe qué gasto es',1);
  const b=$('#sav');b.disabled=true;
- const {error}=await sb.from('gastos').insert({hogar_id:S.hogar.id,fecha,importe,pagador:uid(S.persona),concepto:S.cat,detalle:S.cat=='Otros'?det:null});
+ const {data:nv,error}=await sb.from('gastos').insert({hogar_id:S.hogar.id,fecha,importe,pagador:uid(S.persona),concepto:S.cat,detalle:S.cat=='Otros'?det:null}).select(CQ).single();
  b.disabled=false;if(error)return toast('Error: '+error.message,1);
- toast(`✅ ${eur(importe)} guardados en «${S.cat}»`);$('#imp').value='';$('#det').value='';S.cat=null;renderCats();await cargar()}
+ if(fecha>=S.desde)S.g.push(norm(nv));S.ult=nv.creado_en;ordena();
+ toast(`✅ ${eur(importe)} guardados en «${S.cat}»`);$('#imp').value='';$('#det').value='';S.cat=null;renderCats();render()}
  
 /* ---------- Cuentas (N personas) ---------- */
 function saldo(k){const m=S.g.filter(g=>g.fecha.slice(0,7)==k),P=S.all.filter(x=>x.activo||m.some(g=>g.persona==x.nombre)),n=P.length||1,pag={};
@@ -364,17 +406,20 @@ function renderDeuda(){
   +s.pagos.map(p=>`<div class="res"><b>${esc(p.de)}</b> debe a <b>${esc(p.a)}</b><div class="v">${eur(p.v)}</div></div>`).join('')
   +`<button class="btn primary" id="bL" data-k="${k}">Marcar como liquidado</button>`+(t=='cambio'?und:'');
  $('#deuda').innerHTML=`<h3>Cuentas del mes</h3>${pend.length?`<div class="aviso">⏳ Pendiente: ${pend.map(mesN).join(', ')}</div>`:''}
- <select id="sm">${ks.map(x=>`<option value="${x}" ${x==k?'selected':''}>${mesN(x)}</option>`).join('')}</select>
+ <select id="sm">${ks.map(x=>`<option value="${x}" ${x==k?'selected':''}>${mesN(x)}</option>`).join('')}${S.desde>'0001'?'<option value="+">Meses anteriores…</option>':''}</select>
  <div class="pair">${Object.entries(s.pag).map(([n,v])=>`<div class="who"><small><i class="dot" style="background:${COL[n]};display:inline-block"></i> ${esc(n)} ha pagado</small><b>${eur(v)}</b></div>`).join('')}</div>${r}
  <div class="sub" style="margin-top:8px">Lo que paga cada persona se reparte a partes iguales. Los gastos «Compartido» no cuentan.</div>`}
-$('#deuda').onchange=e=>{if(e.target.id=='sm'){S.dm=e.target.value;renderDeuda()}};
+$('#deuda').onchange=async e=>{if(e.target.id!='sm')return;if(e.target.value=='+'){toast('Cargando meses anteriores…');try{await asegura(antes12(S.desde))}catch(x){return toast(x.message,1)}S.dm=null;if(S.tab=='sum')renderRes();return}S.dm=e.target.value;renderDeuda()};
 $('#deuda').onclick=async e=>{const b=e.target.closest('button');if(!b||!b.dataset.k)return;b.disabled=true;
  const {error}=b.id=='bL'?await sb.from('liquidaciones').upsert({hogar_id:S.hogar.id,mes:b.dataset.k,importe:saldo(b.dataset.k).total,liquidado_el:new Date().toISOString()})
   :await sb.from('liquidaciones').delete().eq('hogar_id',S.hogar.id).eq('mes',b.dataset.k);
- if(error){b.disabled=false;return toast(error.message,1)}await cargar()};
+ if(error){b.disabled=false;return toast(error.message,1)}
+ const k=b.dataset.k;if(b.id=='bL')S.liq[k]={mes:k,importe:saldo(k).total,liquidado_el:new Date().toISOString()};else delete S.liq[k];
+ render()};
  
 /* ---------- Resumen ---------- */
 function renderRes(){renderDeuda();
+ const [a0]=rango();if(a0<S.desde){toast('Cargando…');asegura(a0).then(()=>{if(S.tab=='sum')renderRes()}).catch(e=>toast(e.message,1));$('#sb2').classList.add('hidden');return}
  const o=(l,a)=>l.map(([v,t])=>`<option value="${esc(v)}" ${v==a?'selected':''}>${esc(t)}</option>`).join('');
  const PQ=[...new Set([...PER,...S.g.map(g=>g.persona)])];
  $('#fP').innerHTML=o([['mes','Este mes'],['mp','Mes pasado'],['anio','Este año'],['todo','Todo']],S.per);
@@ -397,11 +442,22 @@ function renderRes(){renderDeuda();
 $('#fP').onchange=e=>{S.per=e.target.value;renderRes()};$('#fQ').onchange=e=>{S.q=e.target.value;renderRes()};$('#fC').onchange=e=>{S.ct=e.target.value;renderRes()};
  
 /* ---------- Movimientos y edición ---------- */
-function renderMovs(){const q=$('#bus').value.trim().toLowerCase();
- const r=S.g.filter(g=>!q||[g.tipo,g.detalle,g.persona].some(x=>x.toLowerCase().includes(q))).slice(0,200);
- $('#movs').innerHTML=r.length?r.map(item).join(''):'<div class="empty">No hay movimientos.</div>'}
-$('#bus').oninput=renderMovs;
-$('#csv').onclick=async()=>{const q=$('#bus').value.trim().toLowerCase(),r=S.g.filter(g=>!q||[g.tipo,g.detalle,g.persona].some(x=>x.toLowerCase().includes(q)));if(!r.length)return toast('No hay movimientos',1);
+const sumd=(d,n)=>{const x=new Date(d+'T00:00:00');x.setDate(x.getDate()+n);return iso(x)};
+function movR(){const y=new Date().getFullYear();switch(S.mp){case'2d':return[ayer(),'9999'];case'7d':return[sumd(hoy(),-6),'9999'];case'mes':return mesR(0);case'mp':return mesR(-1);
+ case'anio':return[`${y}-01-01`,`${y}-12-31`];case'rng':return[$('#mD').value||'0000',$('#mH').value||'9999'];default:return['0000','9999']}}
+function movF(){const [a,b]=movR(),q=$('#bus').value.trim().toLowerCase();
+ return S.g.filter(g=>g.fecha>=a&&g.fecha<=b&&(!q||[g.tipo,g.detalle,g.persona].some(x=>x.toLowerCase().includes(q))))}
+function renderMovs(){const [a]=movR();
+ if(a<S.desde){$('#movs').innerHTML='<div class="empty">Cargando…</div>';$('#mm').classList.add('hidden');
+  asegura(a).then(()=>{if(S.tab=='list')renderMovs()}).catch(e=>{$('#movs').innerHTML='';toast('No se pudo cargar: '+e.message,1)});return}
+ const r=movF();$('#mi').textContent=r.length?`${r.length} gasto${r.length==1?'':'s'} · ${eur(sum(r))}`:'';
+ $('#movs').innerHTML=r.length?r.slice(0,S.lim).map(item).join(''):'<div class="empty">No hay movimientos en este periodo.</div>';
+ $('#mm').classList.toggle('hidden',r.length<=S.lim);$('#mm').textContent=`Ver más (${r.length-S.lim} restantes)`}
+let tb;$('#bus').oninput=()=>{clearTimeout(tb);tb=setTimeout(()=>{S.lim=50;renderMovs()},180)};
+$('#mm').onclick=()=>{S.lim+=50;renderMovs()};
+$('#mP').onchange=e=>{S.mp=e.target.value;S.lim=50;$('#mR').classList.toggle('hidden',S.mp!='rng');renderMovs()};
+$('#mD').onchange=$('#mH').onchange=()=>{S.lim=50;renderMovs()};
+$('#csv').onclick=async()=>{const r=movF();if(!r.length)return toast('No hay movimientos',1);
  const t=v=>{let s=String(v??'');if(/^[=+\-@]/.test(s))s="'"+s;return /[;"\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s};
  const L=[['Fecha','Quién','Concepto','Detalle','Importe (€)'].join(';'),...r.map(g=>[g.fecha.split('-').reverse().join('/'),t(g.persona),g.tipo,t(g.detalle),g.importe.toFixed(2).replace('.',',')].join(';'))];
  const nm=`gastos-${hoy()}.csv`,f=new File(['\uFEFF'+L.join('\r\n')],nm,{type:'text/csv;charset=utf-8'});
@@ -415,10 +471,16 @@ $('#sC').onchange=e=>$('#sD').classList.toggle('hidden',e.target.value!='Otros')
 $('#sS').onclick=e=>{const b=e.target.closest('button');if(b)$$('#sS button').forEach(x=>x.classList.toggle('on',x==b))};
 $('#sG').onclick=async()=>{const importe=num($('#sI').value),c=$('#sC').value,d=cap($('#sD').value.trim()),p=$('#sS .on')?.dataset.p||S.edit.persona;
  if(!(importe>0))return toast('Importe no válido',1);if(c=='Otros'&&!d)return toast('Escribe qué gasto es',1);
- const {error}=await sb.from('gastos').update({importe,pagador:uid(p),concepto:c,detalle:c=='Otros'?d:null,fecha:$('#sF').value||S.edit.fecha}).eq('id',S.edit.id);
- if(error)return toast(error.message,1);cerrar();toast('Cambios guardados ✅');await cargar()};
+ const {data:nv,error}=await sb.from('gastos').update({importe,pagador:uid(p),concepto:c,detalle:c=='Otros'?d:null,fecha:$('#sF').value||S.edit.fecha}).eq('id',S.edit.id).select(CQ).single();
+ if(error)return toast(error.message,1);
+ S.g=S.g.filter(x=>x.id!=nv.id);if(nv.fecha>=S.desde)S.g.push(norm(nv));ordena();cerrar();toast('Cambios guardados ✅');render()};
 $('#sB').onclick=async()=>{if(!confirm('¿Borrar este gasto?'))return;
- const {error}=await sb.from('gastos').delete().eq('id',S.edit.id);if(error)return toast(error.message,1);cerrar();toast('Gasto borrado 🗑️');await cargar()};
+ const {error}=await sb.from('gastos').delete().eq('id',S.edit.id);if(error)return toast(error.message,1);const did=S.edit.id;S.g=S.g.filter(x=>x.id!=did);cerrar();toast('Gasto borrado 🗑️');render()};
+$('#mgDel').onclick=async()=>{
+ if(!confirm('Se borrarán tu cuenta, tu hogar y TODOS los gastos. No se puede deshacer. ¿Continuar?'))return;
+ if(prompt('Para confirmar, escribe BORRAR')?.trim().toUpperCase()!=='BORRAR')return;
+ const {error}=await sb.rpc('borrar_mi_cuenta');if(error)return toast(error.message,1);
+ await sb.auth.signOut();location.reload()};
 const abre=e=>{const i=e.target.closest('.item');if(i)abrir(i.dataset.id)};$('#movs').onclick=abre;$('#rec').onclick=abre;
  
 /* ---------- Navegación e inicio ---------- */
